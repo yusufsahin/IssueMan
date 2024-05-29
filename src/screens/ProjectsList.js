@@ -1,14 +1,16 @@
 // screens/ProjectsList.js
-import React, { useEffect } from "react";
-import { ActivityIndicator, View, StyleSheet, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, View, StyleSheet, ScrollView, Modal } from "react-native";
 import { Button, Text, ListItem } from "@rneui/base";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProjects,setCurrentProject } from "../store/reducers/projectsActions";
+import { deleteProject, fetchProjects, setCurrentProject } from "../store/reducers/projectsActions";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ProjectsList = () => {
     const dispatch = useDispatch();
     const { projects, status, error } = useSelector(state => state.projects);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedProject, setSelectedProject] = useState(null);
 
     useEffect(() => {
         if (status === 'idle') {
@@ -18,9 +20,17 @@ const ProjectsList = () => {
 
     const handleSelectProject = (project) => {
         dispatch(setCurrentProject(project));
-   
+        setSelectedProject(project);
+        setModalVisible(true);
     };
 
+    const hideModal = () => {
+        setModalVisible(false);
+    }
+
+    const handleDeleteProject = (projectId) => {
+        dispatch(deleteProject(projectId));
+    };
     return (
         <SafeAreaView style={styles.container}>
             {status === 'loading' && <ActivityIndicator size="large" color="#0000ff" />}
@@ -35,10 +45,28 @@ const ProjectsList = () => {
                     >
                         <ListItem.Content>
                             <ListItem.Title>{project.name}</ListItem.Title>
+                            <Button title="Delete" onPress={() => handleDeleteProject(project.id)} />
+
                         </ListItem.Content>
                     </ListItem>
                 ))}
             </ScrollView>
+
+            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={hideModal}>
+                <View style={styles.modalView}>
+                    {
+                        selectedProject && (
+                            <>
+                                <Text style={styles.modalText}>Project Name: {selectedProject.name}</Text>
+                                <Text style={styles.modalText}>Description: {selectedProject.description}</Text>
+                                <Button title="Edit Project" onPress={() => { hideModal() }} />
+                                <Button title="Close" onPress={hideModal} />
+                            </>
+                        )
+                    }
+
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 };
@@ -61,6 +89,26 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 16,
         textAlign: 'center',
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 18,
     },
 });
 
