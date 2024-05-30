@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
-import { useDispatch } from "react-redux";
-import { addProject } from "../store/reducers/projectsActions";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProject } from "../store/reducers/projectsActions";
 
-const ProjectForm = () => {
+const EditProjectForm = ({ navigation }) => {
+
     const dispatch = useDispatch();
-    const { control, handleSubmit, reset } = useForm({
-        defaultValues: { name: '', description: '' }
+    const { currentProject } = useSelector(state => state.projects)
+
+    const { control, handleSubmit, reset, setValue } = useForm({
+        defaultValues: { id: '', name: '', description: '' }
     });
 
+    useEffect(() => {
+        if (currentProject) {
+            setValue('id', currentProject.id);
+            setValue('name', currentProject.name);
+            setValue('description', currentProject.description);
+        }
+    }, [currentProject, setValue]
+
+    );
+
     const onSubmit = (data) => {
-        dispatch(addProject({ ...data, owner: "john_doe" }));
+        dispatch(updateProject({ ...data, owner: "john_doe" }));
         reset(); // Reset the form after submission if needed
+        navigation.navigate('Projects')
     };
 
     return (
@@ -66,4 +80,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ProjectForm;
+export default EditProjectForm;

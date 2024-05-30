@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteProject, fetchProjects, setCurrentProject } from "../store/reducers/projectsActions";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const ProjectsList = () => {
+const ProjectsList = ({ navigation }) => {
     const dispatch = useDispatch();
     const { projects, status, error } = useSelector(state => state.projects);
     const [modalVisible, setModalVisible] = useState(false);
@@ -21,7 +21,8 @@ const ProjectsList = () => {
     const handleSelectProject = (project) => {
         dispatch(setCurrentProject(project));
         setSelectedProject(project);
-        setModalVisible(true);
+       // setModalVisible(true);
+       navigation.navigate('EditProject')
     };
 
     const hideModal = () => {
@@ -36,6 +37,11 @@ const ProjectsList = () => {
             {status === 'loading' && <ActivityIndicator size="large" color="#0000ff" />}
             {status === 'failed' && <Text style={styles.errorText}>Error: {error}</Text>}
             <ScrollView contentContainerStyle={styles.scrollView}>
+                <Button
+                    title="Add Project"
+                    onPress={() => navigation.navigate('AddProject')}
+                />
+
                 {projects.map((project, index) => (
                     <ListItem
                         key={project.id}
