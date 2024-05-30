@@ -24,7 +24,12 @@ const ProjectsList = ({ navigation }) => {
        // setModalVisible(true);
        navigation.navigate('EditProject')
     };
-
+    const handleSelectProjectView = (project) => {
+        dispatch(setCurrentProject(project));
+       // setSelectedProject(project);
+       // setModalVisible(true);
+       navigation.navigate('ProjectDetails')
+    };
     const hideModal = () => {
         setModalVisible(false);
     }
@@ -47,12 +52,12 @@ const ProjectsList = ({ navigation }) => {
                         key={project.id}
                         bottomDivider
                         containerStyle={[styles.listItem, { backgroundColor: index % 2 === 0 ? '#ffebcd' : '#ffe4e1' }]}
-                        onPress={() => handleSelectProject(project)}
+                       
                     >
                         <ListItem.Content>
                             <ListItem.Title>{project.name}</ListItem.Title>
                             <Button title="Delete" onPress={() => handleDeleteProject(project.id)} />
-
+                            <Button title="View" onPress={() => handleSelectProjectView(project)} />
                         </ListItem.Content>
                     </ListItem>
                 ))}
