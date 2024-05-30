@@ -29,10 +29,12 @@ export const clearCurrentIssue = () => ({
     type: CLEAR_CURRENT_ISSUE
 });
 
-export const fetchIssues = () => async (dispatch) => {
+
+//http://192.168.1.11:3000/issues?projectId=1
+export const fetchIssues = (projectId) => async (dispatch) => {
     dispatch({ type: FETCH_ISSUES_REQUEST });
     try {
-        const response = await axios.get('/issues');
+        const response = await axios.get(`/issues?projectId=${projectId}`);
         dispatch({ type: FETCH_ISSUES_SUCCESS, payload: response.data });
     } catch (error) {
         dispatch({ type: FETCH_ISSUES_FAILURE, error: error.message });
@@ -53,9 +55,9 @@ export const updateIssue = (updatedIssue) => async (dispatch) => {
     dispatch({ type: UPDATE_ISSUE_REQUEST });
     try {
         const response = await axios.put(`/issues/${updatedIssue.id}`, updateIssue);
-        dispatch({ type: UPDATE_PROJECT_SUCCESS, payload: response.data });
+        dispatch({ type: UPDATE_ISSUE_SUCCESS, payload: response.data });
     } catch (error) {
-        dispatch({ type: UPDATE_PROJECT_FAILURE, payload: error.message });
+        dispatch({ type: UPDATE_ISSUE_FAILURE, payload: error.message });
     }
 };
 
@@ -63,7 +65,7 @@ export const deleteProject = (issueId) => async (dispatch) => {
     dispatch({ type: DELETE_ISSUE_REQUEST });
     try {
         await axios.delete(`/issues/${issueId}`);
-        dispatch({ type: DELETE_ISSUE_SUCCESS, payload: projectId });
+        dispatch({ type: DELETE_ISSUE_SUCCESS, payload: issueId });
     } catch (error) {
         dispatch({ type: DELETE_ISSUE_FAILURE, payload: error.message });
     }

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { clearCurrentProject } from "../store/reducers/projectsActions";
+import IssuesList from "./IssuesList";
 
 const ProjectDetails = ({ navigation }) => {
 
@@ -37,6 +38,8 @@ const ProjectDetails = ({ navigation }) => {
 
         <Button title="Edit Project" onPress={handleEdit} />
         <Button title="Back to Projects" onPress={handleBack} />
+        <IssuesList projectId={currentProject.id} navigation={navigation} />
+
     </View>
     );
 };
