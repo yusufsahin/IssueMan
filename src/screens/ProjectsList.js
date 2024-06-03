@@ -47,7 +47,7 @@ const ProjectsList = ({ navigation }) => {
                     onPress={() => navigation.navigate('AddProject')}
                 />
 
-                {projects.map((project, index) => (
+                {projects && projects.map((project, index) => (
                     <ListItem
                         key={project.id}
                         bottomDivider
@@ -56,28 +56,11 @@ const ProjectsList = ({ navigation }) => {
                     >
                         <ListItem.Content>
                             <ListItem.Title>{project.name}</ListItem.Title>
-                            <Button title="Delete" onPress={() => handleDeleteProject(project.id)} />
                             <Button title="View" onPress={() => handleSelectProjectView(project)} />
                         </ListItem.Content>
                     </ListItem>
                 ))}
             </ScrollView>
-
-            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={hideModal}>
-                <View style={styles.modalView}>
-                    {
-                        selectedProject && (
-                            <>
-                                <Text style={styles.modalText}>Project Name: {selectedProject.name}</Text>
-                                <Text style={styles.modalText}>Description: {selectedProject.description}</Text>
-                                <Button title="Edit Project" onPress={() => { hideModal() }} />
-                                <Button title="Close" onPress={hideModal} />
-                            </>
-                        )
-                    }
-
-                </View>
-            </Modal>
         </SafeAreaView>
     );
 };
@@ -101,26 +84,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
     },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center",
-        fontSize: 18,
-    },
+
 });
 
 export default ProjectsList;

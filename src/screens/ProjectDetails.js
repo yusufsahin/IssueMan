@@ -25,6 +25,10 @@ const ProjectDetails = ({ navigation }) => {
         dispatch(clearCurrentProject());
         navigation.navigate('Projects');
     };
+
+    const handleDelete=()=>{
+        navigation.navigate('ProjectDelete')
+    }
     return (
         <View style={styles.container}>
         <Text style={styles.label}>Project Name:</Text>
@@ -38,6 +42,7 @@ const ProjectDetails = ({ navigation }) => {
 
         <Button title="Edit Project" onPress={handleEdit} />
         <Button title="Back to Projects" onPress={handleBack} />
+        <Button title="Delete Project" onPress={()=>handleDelete()} />
         <IssuesList projectId={currentProject.id} navigation={navigation} />
 
     </View>

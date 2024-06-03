@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, Button } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearCurrentIssue } from '../store/reducers/issuesActions';
+import { clearCurrentIssue, deleteIssue } from '../store/reducers/issuesActions';
 
-const IssueDetails = ({navigation}) => {
+const IssueDelete = ({navigation}) => {
 
     const dispatch = useDispatch();
 
@@ -16,14 +16,10 @@ const IssueDetails = ({navigation}) => {
             </View>
         );
     }
-    const handleEdit = () => {
-        navigation.navigate('EditIssue');
+    const handleDelete = (id) => {
+        dispatch(deleteIssue(id))
+        navigation.navigate('ProjectDetails');
     };
-
-    const handleDelete = () => {
-        navigation.navigate('IssueDelete');
-    };
-
 
     const handleBack = () => {
         dispatch(clearCurrentIssue());
@@ -31,6 +27,7 @@ const IssueDetails = ({navigation}) => {
     };
     return (
         <View style={styles.container}>
+            <Text style={styles.message}>Do you want to delete Issue ID : {currentIssue.id}</Text>
             <Text style={styles.label}>Issue Title:</Text>
             <Text style={styles.value}>{currentIssue.title}</Text>
 
@@ -38,9 +35,8 @@ const IssueDetails = ({navigation}) => {
             <Text style={styles.value}>{currentIssue.description}</Text>
 
 
-            <Button title="Edit Issue" onPress={handleEdit} />
-            <Button title="Delete Issue" onPress={handleDelete} />
-            <Button title="Back to Issue" onPress={handleBack} />
+            <Button title="Delete Issue" onPress={()=>handleDelete(currentIssue.id)} />
+            <Button title="Back to Issue" onPress={()=>handleBack()} />
 
 
         </View>
@@ -69,4 +65,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default IssueDetails
+export default IssueDelete;

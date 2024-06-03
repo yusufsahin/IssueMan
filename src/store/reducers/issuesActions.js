@@ -54,14 +54,14 @@ export const addIssue = (newIssue) => async (dispatch) => {
 export const updateIssue = (updatedIssue) => async (dispatch) => {
     dispatch({ type: UPDATE_ISSUE_REQUEST });
     try {
-        const response = await axios.put(`/issues/${updatedIssue.id}`, updateIssue);
+        const response = await axios.put(`/issues/${updatedIssue.id}`, updatedIssue);
         dispatch({ type: UPDATE_ISSUE_SUCCESS, payload: response.data });
     } catch (error) {
         dispatch({ type: UPDATE_ISSUE_FAILURE, payload: error.message });
     }
 };
 
-export const deleteProject = (issueId) => async (dispatch) => {
+export const deleteIssue = (issueId) => async (dispatch) => {
     dispatch({ type: DELETE_ISSUE_REQUEST });
     try {
         await axios.delete(`/issues/${issueId}`);

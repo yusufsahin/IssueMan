@@ -54,25 +54,13 @@ const IssuesList = ({ projectId, navigation }) => {
                     >
                         <ListItem.Content>
                             <ListItem.Title>{issue.title}</ListItem.Title>
-                            <Button title="Delete" onPress={() => handleDeleteIssue(issue.id)} />
                             <Button title="View" onPress={() => handleSelectIssueView(issue)} />
                         </ListItem.Content>
                     </ListItem>
                 ))}
             </ScrollView>
 
-            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={hideModal}>
-                <View style={styles.modalView}>
-                    {selectedIssue && (
-                        <>
-                            <Text style={styles.modalText}>Issue Title: {selectedIssue.title}</Text>
-                            <Text style={styles.modalText}>Description: {selectedIssue.description}</Text>
-                            <Button title="Edit Issue" onPress={() => navigation.navigate('EditIssue', { issue: selectedIssue })} />
-                            <Button title="Close" onPress={hideModal} />
-                        </>
-                    )}
-                </View>
-            </Modal>
+            
         </SafeAreaView>
     );
 };
@@ -96,26 +84,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
     },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center",
-        fontSize: 18,
-    },
+
 });
 
 export default IssuesList;

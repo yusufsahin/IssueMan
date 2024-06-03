@@ -37,7 +37,7 @@ const issuesReducer=(state=initialState,action)=>{
             return {...state,updateLoading:true};
         case UPDATE_ISSUE_SUCCESS:
             return {...state,updateLoading:false,
-                issuues:state.issues.map(issue=> issue.id===action.payload.id ? action.payload : issue),
+                issues:state.issues.map(issue=> issue.id===action.payload.id ? action.payload : issue),
                 updateError:''
             };
         case UPDATE_ISSUE_FAILURE:
@@ -46,7 +46,7 @@ const issuesReducer=(state=initialState,action)=>{
             return {...state,deleteLoading:true};
         case DELETE_ISSUE_SUCCESS:
             return {...state,deleteLoading:false,
-                projects:state.issues.filter(issue=>issue.id!==action.payload),
+                issues:state.issues.filter(issue=>issue.id!==action.payload),
                 deleteError:''
             };
         case DELETE_ISSUE_FAILURE:

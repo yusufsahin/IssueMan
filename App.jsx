@@ -56,6 +56,8 @@ import ProjectDetails from './src/screens/ProjectDetails';
 import AddIssueForm from './src/screens/AddIssueForm';
 import EditIssueForm from './src/screens/EditIssueForm';
 import IssueDetails from './src/screens/IssueDetails';
+import IssueDelete from './src/screens/IssueDelete';
+import ProjectDelete from './src/screens/ProjectDelete';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,9 +72,11 @@ const App = () => {
             <Stack.Screen name="AddProject" component={AddProjectForm} />
             <Stack.Screen name="EditProject" component={EditProjectForm} />
             <Stack.Screen name="ProjectDetails" component={ProjectDetails} />
+            <Stack.Screen name="ProjectDelete" component={ProjectDelete} />
             <Stack.Screen name="AddIssue" component={AddIssueForm} />
             <Stack.Screen name="EditIssue" component={EditIssueForm} />
             <Stack.Screen name="IssueDetails" component={IssueDetails} />
+            <Stack.Screen name="IssueDelete" component={IssueDelete} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
