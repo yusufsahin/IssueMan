@@ -53,6 +53,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import EditProjectForm from './src/screens/EditProjectForm';
 import ProjectDetails from './src/screens/ProjectDetails';
+import AddIssueForm from './src/screens/AddIssueForm';
+import EditIssueForm from './src/screens/EditIssueForm';
+import IssueDetails from './src/screens/IssueDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +70,9 @@ const App = () => {
             <Stack.Screen name="AddProject" component={AddProjectForm} />
             <Stack.Screen name="EditProject" component={EditProjectForm} />
             <Stack.Screen name="ProjectDetails" component={ProjectDetails} />
+            <Stack.Screen name="AddIssue" component={AddIssueForm} />
+            <Stack.Screen name="EditIssue" component={EditIssueForm} />
+            <Stack.Screen name="IssueDetails" component={IssueDetails} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
