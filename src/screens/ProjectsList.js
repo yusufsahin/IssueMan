@@ -9,8 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const ProjectsList = ({ navigation }) => {
     const dispatch = useDispatch();
     const { projects, status, error } = useSelector(state => state.projects);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedProject, setSelectedProject] = useState(null);
+
 
     useEffect(() => {
         if (status === 'idle') {
@@ -18,21 +17,12 @@ const ProjectsList = ({ navigation }) => {
         }
     }, [dispatch, status]);
 
-    const handleSelectProject = (project) => {
-        dispatch(setCurrentProject(project));
-        setSelectedProject(project);
-       // setModalVisible(true);
-       navigation.navigate('EditProject')
-    };
+    
     const handleSelectProjectView = (project) => {
         dispatch(setCurrentProject(project));
-       // setSelectedProject(project);
-       // setModalVisible(true);
-       navigation.navigate('ProjectDetails')
+        navigation.navigate('ProjectDetails')
     };
-    const hideModal = () => {
-        setModalVisible(false);
-    }
+    
 
     const handleDeleteProject = (projectId) => {
         dispatch(deleteProject(projectId));
